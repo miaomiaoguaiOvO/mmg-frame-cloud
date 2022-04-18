@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmg.datasource.mapper.PermissionMapper">
+
+    <resultMap id="RolePermissionByAppNameMap" type="com.mmg.datasource.vo.RolePermissionByAppNameVO">
+        <result column="permission_url" property="permissionUrl"/>
+        <collection property="roleList" ofType="arraylist" column="{permissionId=permission_id}" select="getRoleNameByPermissionId"/>
+    </resultMap>
+    
+    <select id="getRolePermissionByAppName" resultMap="RolePermissionByAppNameMap">
+        SELECT DISTINCT p.permission_id, permission_url
+        FROM permission p
+            LEFT JOIN role_permission rp ON rp.permission_id = p.permission_id AND rp.is_del = 0
+        WHERE app_name = #{appName}
+          AND p.is_del = 0
+    </select>
+    <select id="getRoleNameByPermissionId" resultType="java.lang.String">
+        SELECT
+            role_name
+        FROM
+            role_permission rp
+                LEFT JOIN role r ON r.role_id = rp.role_id
+                AND r.is_del = 0
+        WHERE
+            rp.permission_id = #{permissionId}
+          AND rp.is_del = 0
+    </select>
+
+</mapper>

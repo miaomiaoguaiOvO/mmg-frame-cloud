@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmg.datasource.mapper.SysUserMapper">
+
+    <select id="getRoleById" resultType="com.mmg.datasource.entity.Role">
+        select *
+        from `role`
+        where role_id in (select role_id from user_role where user_id = #{userId} and is_del = 0)
+          and is_del = 0
+    </select>
+
+</mapper>

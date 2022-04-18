@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mmg</groupId>
+    <artifactId>mmg-frame-cloud</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>commons</module>
+        <module>gateway-security</module>
+        <module>common-datasource</module>
+        <module>cloud-user-provider</module>
+        <module>cloud-user-consumer</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>2.3.2.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
+        <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
+        <com.alibaba.fastJson>1.2.75</com.alibaba.fastJson>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--springboot 2.3.2.RELEASE-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Spring cloud Hoxton.SR9-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Spring cloud alibaba 2.3.2.RELEASE-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+            </plugin>
+            <plugin>
+                <!-- 用下面插件的来给java进行编译的 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <!-- 将会使用指定的 JDK 版本将 java 文件编译为 class 文件（针对编译运行环境） -->
+                    <source>8</source>
+                    <!--  将会使用指定的 JDK 版本对源代码进行编译（针对编译运行环境）-->
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- 将资源文件打包进去(各种xml，properties，xsd文件)-->
+        <resources>
+            <resource>
+                <!-- 指定文件路径 -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <!-- **表示任意级目录，*表示任意文件 -->
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
