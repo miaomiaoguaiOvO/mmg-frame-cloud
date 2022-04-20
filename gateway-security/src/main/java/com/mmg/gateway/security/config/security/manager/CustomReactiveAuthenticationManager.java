@@ -1,8 +1,10 @@
 package com.mmg.gateway.security.config.security.manager;
 
 import com.mmg.commons.config.exception.ApiErrorCode;
+import com.mmg.commons.config.exception.ApiException;
 import com.mmg.gateway.security.config.security.bean.CustomUserDetail;
 import com.mmg.gateway.security.config.security.bean.CustomUserDetailService;
+import com.mmg.gateway.security.config.security.bean.CustomUsernamePasswordAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -28,14 +30,23 @@ public class CustomReactiveAuthenticationManager implements ReactiveAuthenticati
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CustomUserDetailService customUserDetailService;
-    
+
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-
         //用户名
         String username = authentication.getName();
         //密码
         String rawPassword = (String) authentication.getCredentials();
+        //todo 如果自定义参数用户名密码启用下面的用户名密码
+//        CustomUsernamePasswordAuthenticationToken authenticationToken;
+//        if (authentication instanceof CustomUsernamePasswordAuthenticationToken){
+//            authenticationToken = (CustomUsernamePasswordAuthenticationToken) authentication;
+//        }else {
+//            return Mono.error(new ApiException(ApiErrorCode.BAD_REQUEST));
+//        }
+//        String username = authenticationToken.getPrincipal().toString();
+//        String password = authenticationToken.getCredentials().toString();
+//        String code = authenticationToken.getCode();
         Mono<UserDetails> userDetailsMono;
         try {
             userDetailsMono = customUserDetailService.findByUsername(username);

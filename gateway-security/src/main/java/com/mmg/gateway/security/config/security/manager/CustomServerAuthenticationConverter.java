@@ -30,6 +30,7 @@ public class CustomServerAuthenticationConverter implements ServerAuthentication
         HttpMessageReader<Object> messageReader = new DecoderHttpMessageReader<>(new Jackson2JsonDecoder(mapper));
         ServerRequest serverRequest = ServerRequest.create(serverWebExchange, Collections.singletonList(messageReader));
         return serverRequest.bodyToMono(LoginRequest.class).map(m -> {
+            //todo 这里可以自定义参数 使用com.mmg.gateway.security.config.security.bean.CustomUsernamePasswordAuthenticationToken
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(m.getUsername(), m.getPassword());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             return authenticationToken;

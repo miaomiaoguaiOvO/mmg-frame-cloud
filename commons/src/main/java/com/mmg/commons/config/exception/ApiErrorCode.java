@@ -8,7 +8,7 @@ public enum ApiErrorCode {
     VALIDATE_FAILED(402, "参数检验失败"),
     FORBIDDEN(403, "无权访问"),
 
-    BAD_REQUEST(411, "参数不能为空"),
+    BAD_REQUEST(411, "参数错误"),
     SYSTEM_ERROR(500, "服务器错误"),
 
     ACCOUNT_NOT_EXIST(301, "账号不存在"),
