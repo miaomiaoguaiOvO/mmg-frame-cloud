@@ -17,8 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.mmg.commons", "com.mmg.datasource", "com.mmg.user.consumer"})
 @MapperScan("com.mmg.datasource.mapper")
 @EnableFeignClients
-public class ConsumerApplication {
+public class UserConsumerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(UserConsumerApplication.class, args);
     }
 }

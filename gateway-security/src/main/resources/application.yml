@@ -16,6 +16,9 @@ spring:
       discovery:
         locator:
           enabled: true
+    loadbalancer:
+      ribbon:
+        enabled: false
 #      routes:
 #        - id: provider
 #          uri: lb://cloud-user-provider
